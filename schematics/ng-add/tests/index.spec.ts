@@ -1,6 +1,6 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import { getFileContent } from '@schematics/angular/utility/test';
-import { join } from 'path';
+import { join, normalize } from 'path';
 
 import { Schema as NgAddOptions } from '../schema';
 
@@ -119,11 +119,20 @@ describe('ng-add', () => {
     expect(ssApp.architect.build.builder).toBe('@angular-builders/custom-webpack:browser');
     expect(ssApp.architect.serve.builder).toBe('@angular-builders/custom-webpack:dev-server');
 
-    expect(ssApp.architect.build.options.main).toEqual(
-      'projects/ss-angular-cli-app/src/main.single-spa.ts',
+    const main = normalize(ssApp.architect.build.options.main);
+    const expectedMain = normalize('projects/ss-angular-cli-app/src/main.single-spa.ts');
+    expect(main).toEqual(expectedMain);
+
+    const customWebpackConfigPath = normalize(
+      ssApp.architect.build.options.customWebpackConfig.path,
+    );
+    const expectedCustomWebpackConfigPath = normalize(
+      'projects/ss-angular-cli-app/extra-webpack.config.js',
     );
     expect(ssApp.architect.build.options.customWebpackConfig).toEqual({
-      path: 'projects/ss-angular-cli-app/extra-webpack.config.js',
+      libraryName: 'ss-angular-cli-app',
+      libraryTarget: 'umd',
+      path: expectedCustomWebpackConfigPath,
     });
   });
 
