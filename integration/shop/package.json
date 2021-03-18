@@ -14,7 +14,7 @@
   "dependencies": {
     "@angular/common": "file:../../node_modules/@angular/common",
     "@angular/compiler": "file:../../node_modules/@angular/compiler",
-    "@angular/core": "file:../../node_modules/@angular/core",
+    "@angular/core": "11.0.5",
     "@angular/platform-browser": "file:../../node_modules/@angular/platform-browser",
     "@angular/platform-browser-dynamic": "file:../../node_modules/@angular/platform-browser-dynamic",
     "@angular/router": "file:../../node_modules/@angular/router",
